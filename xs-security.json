@@ -1,0 +1,24 @@
+{
+  "xsappname": "Pillar2",
+  "tenant-mode": "dedicated",
+
+  "scopes": [ 
+     { "name": "$XSAPPNAME.trigger",  "description": "Trigger BPA process" },
+    { "name": "$XSAPPNAME.view",     "description": "View report data" },
+    { "name": "$XSAPPNAME.receive",  "description": "BPA bot can post reports" }
+  ],
+  "attributes": [],
+  "role-templates": [
+     {
+      "name": "Pillar2User",
+      "description": "Can trigger and view reports",
+      "scope-references": ["$XSAPPNAME.trigger", "$XSAPPNAME.view"]
+    },
+    {
+      "name": "Pillar2Bot",
+      "description": "BPA bot role for posting reports",
+      "scope-references": ["$XSAPPNAME.receive"]
+    }
+  ],
+  "authorities-inheritance": false
+}

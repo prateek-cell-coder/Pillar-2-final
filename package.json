@@ -1,0 +1,45 @@
+{
+  "name": "Pillar2",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "dependencies": {
+    "@cap-js/hana"                : "^2",
+    "@sap-cloud-sdk/connectivity" : "^4.6.0",
+    "@sap-cloud-sdk/http-client"  : "^4.6.0",
+    "@sap-cloud-sdk/resilience"   : "^4.6.0",
+    "@sap/cds"                    : "^9",
+    "@sap/xssec"                  : "^4",
+    "express"                     : "^4",
+    "xlsx"                        : "^0.18.5"
+  },
+  "devDependencies": {
+    "@cap-js/sqlite"  : "^2",
+    "cds-plugin-ui5"  : "^0.13.0"
+  },
+  "scripts": {
+    "start"        : "cds-serve",
+    "watch-pillar" : "cds watch --open com.bosch.pillar.pillar/index.html?sap-ui-xx-viewCache=false --livereload false"
+  },
+  "private": true,
+  "cds": {
+    "requires": {
+      "auth": {
+        "kind"          : "dummy",
+        "[production]"  : { "kind": "xsuaa" }
+      },
+      "connectivity"            : true,
+      "destinations"            : true,
+      "html5-repo"              : true,
+      "spa_process_destination" : {
+        "kind"        : "rest",
+        "credentials" : {
+          "destination" : "SPA_PROCESS_AUTOMATION",
+          "path"        : "/public/workflow/rest/v1/workflow-instances"
+        }
+      }
+    }
+  },
+  "workspaces": [
+    "app/*"
+  ]
+}

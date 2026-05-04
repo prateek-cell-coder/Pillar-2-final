@@ -1,0 +1,158 @@
+<mvc:View
+  controllerName="com.bosch.pillar.pillar.controller.Main"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:layout="sap.ui.layout"
+  xmlns:table="sap.ui.table"
+  displayBlock="true">
+
+  <Page id="mainPage" showHeader="false">
+    <VBox class="sapUiResponsiveMargin">
+
+      <!-- TITLE -->
+      <Panel expandable="false">
+        <headerToolbar>
+          <Toolbar>
+            <Title text="Pillar II Reporting/Selling" level="H2"/>
+          </Toolbar>
+        </headerToolbar>
+      </Panel>
+
+      <!-- SELECTIONS -->
+      <Panel expandable="false" class="sapUiSmallMarginTop">
+        <headerToolbar>
+          <Toolbar height="2rem">
+            <Text text="Selections"/>
+          </Toolbar>
+        </headerToolbar>
+        <VBox class="sapUiSmallMargin">
+
+          <VBox class="sapUiTinyMarginBottom">
+            <Label text="System"/>
+            <Select id="systemSelect" width="100%" forceSelection="false">
+              <items>
+                <core:Item xmlns:core="sap.ui.core" key="" text="Select option"/>
+                <core:Item xmlns:core="sap.ui.core" key="XOE:" text="XOE"/>
+                <core:Item xmlns:core="sap.ui.core" key="P42:" text="P42"/>
+              </items>
+            </Select>
+          </VBox>
+
+          <VBox class="sapUiTinyMarginBottom">
+            <Label text="Company Code"/>
+            <Input id="companyCode" placeholder="Type here..." width="100%"/>
+          </VBox>
+
+          <layout:Grid defaultSpan="L6 M6 S12" hSpacing="1" class="sapUiTinyMarginBottom">
+            <VBox>
+              <Label text="Deactivation From Date"/>
+              <DatePicker id="deactivationFrom" placeholder="DD.MM.YYYY"
+                displayFormat="dd.MM.yyyy" valueFormat="dd.MM.yyyy" width="100%"/>
+            </VBox>
+            <VBox>
+              <Label text="Deactivation To Date"/>
+              <DatePicker id="deactivationTo" placeholder="DD.MM.YYYY"
+                displayFormat="dd.MM.yyyy" valueFormat="dd.MM.yyyy" width="100%"/>
+            </VBox>
+          </layout:Grid>
+
+          <VBox class="sapUiTinyMarginBottom">
+            <Label text="Transaction Type"/>
+            <ComboBox id="transactionType" placeholder="Select or type here..." width="100%">
+              <items>
+                
+                <core:Item xmlns:core="sap.ui.core" key="230" text="230"/>
+                <core:Item xmlns:core="sap.ui.core" key="275" text="275"/>
+              </items>
+            </ComboBox>
+          </VBox>
+
+          <VBox class="sapUiTinyMarginBottom">
+            <Label text="Depreciation area"/>
+            <Select id="depreciationArea" width="100%" forceSelection="false">
+              <items>
+                <core:Item xmlns:core="sap.ui.core" key="" text="Select option"/>
+                <core:Item xmlns:core="sap.ui.core" key="15" text="Tax balance sheet"/>
+                <core:Item xmlns:core="sap.ui.core" key="40" text="IFRS Depreciation"/>
+              </items>
+            </Select>
+          </VBox>
+
+          <VBox class="sapUiTinyMarginBottom">
+            <Label text="Sort Variant"/>
+            <Input id="sortVariant" placeholder="Type here..." width="100%"/>
+          </VBox>
+
+          <Button
+            text="Trigger Process Automation"
+            type="Emphasized"
+            press="onTriggerProcessAutomation"
+            width="100%"
+            class="sapUiSmallMarginTop"/>
+
+        </VBox>
+      </Panel>
+
+      <!-- REPORTING -->
+      <Panel expandable="false" class="sapUiSmallMarginTop">
+        <headerToolbar>
+          <Toolbar height="2rem">
+            <Title text="Reporting" level="H3"/>
+          </Toolbar>
+        </headerToolbar>
+        <VBox class="sapUiSmallMargin">
+          <Text text="Please upload the excel file below." class="sapUiTinyMarginBottom"/>
+          <HBox class="sapUiSmallMarginTop" alignItems="Center">
+            <Button text="Upload" type="Emphasized"
+              press="onUploadPress" class="sapUiTinyMarginEnd"/>
+            <Button text="Export" type="Emphasized"
+              press="onExport"/>
+          </HBox>
+          <HBox id="uploadStatus" visible="false" class="sapUiSmallMarginTop" alignItems="Center">
+            <core:Icon xmlns:core="sap.ui.core"
+              src="sap-icon://message-success" color="Positive"
+              class="sapUiTinyMarginEnd"/>
+            <Text id="uploadStatusText" text=""/>
+          </HBox>
+        </VBox>
+      </Panel>
+
+      <!-- TABLE -->
+      <Panel expandable="false" class="sapUiSmallMarginTop">
+        <table:Table
+          id="dataTable"
+          rows="{tableModel>/rows}"
+          visibleRowCount="10"
+          selectionMode="None"
+          alternateRowColors="true"
+          width="100%">
+          <table:columns>
+            <table:Column width="120px"><Label text="Asset"/><table:template><Text text="{tableModel>Asset}"/></table:template></table:Column>
+            <table:Column width="80px"><Label text="SNo"/><table:template><Text text="{tableModel>SNo}"/></table:template></table:Column>
+            <table:Column width="100px"><Label text="AssetClass"/><table:template><Text text="{tableModel>AssetClass}"/></table:template></table:Column>
+            <table:Column width="120px"><Label text="CapitalizedOn"/><table:template><Text text="{tableModel>CapitalizedOn}"/></table:template></table:Column>
+            <table:Column width="120px"><Label text="DeactDate"/><table:template><Text text="{tableModel>DeactDate}"/></table:template></table:Column>
+            <table:Column width="80px"><Label text="Use"/><table:template><Text text="{tableModel>Use}"/></table:template></table:Column>
+            <table:Column width="200px"><Label text="AssetDescription"/><table:template><Text text="{tableModel>AssetDescription}"/></table:template></table:Column>
+            <table:Column width="120px"><Label text="BSAcctAPC"/><table:template><Text text="{tableModel>BSAcctAPC}"/></table:template></table:Column>
+            <table:Column width="120px"><Label text="Retirement"/><table:template><Text text="{tableModel>Retirement}"/></table:template></table:Column>
+            <table:Column width="120px"><Label text="DeprRetired"/><table:template><Text text="{tableModel>DeprRetired}"/></table:template></table:Column>
+            <table:Column width="120px"><Label text="RetBookValue"/><table:template><Text text="{tableModel>RetBookValue}"/></table:template></table:Column>
+            <table:Column width="120px"><Label text="RetRevenue"/><table:template><Text text="{tableModel>RetRevenue}"/></table:template></table:Column>
+            <table:Column width="100px"><Label text="Loss"/><table:template><Text text="{tableModel>Loss}"/></table:template></table:Column>
+            <table:Column width="100px"><Label text="Gain"/><table:template><Text text="{tableModel>Gain}"/></table:template></table:Column>
+            <table:Column width="70px"><Label text="Crcy"/><table:template><Text text="{tableModel>Crcy}"/></table:template></table:Column>
+            <table:Column width="80px"><Label text="TType"/><table:template><Text text="{tableModel>TType}"/></table:template></table:Column>
+            <table:Column width="120px"><Label text="Document"/><table:template><Text text="{tableModel>Document}"/></table:template></table:Column>
+            <table:Column width="250px"><Label text="Text"/><table:template><Text text="{tableModel>Text}"/></table:template></table:Column>
+            <table:Column width="120px"><Label text="Reference"/><table:template><Text text="{tableModel>Reference}"/></table:template></table:Column>
+            <table:Column width="100px"><Label text="System"/><table:template><Text text="{tableModel>System}"/></table:template></table:Column>
+            <table:Column width="140px"><Label text="TicketNumber"/><table:template><Text text="{tableModel>TicketNumber}"/></table:template></table:Column>
+            <table:Column width="120px"><Label text="InvoiceID"/><table:template><Text text="{tableModel>InvoiceID}"/></table:template></table:Column>
+          </table:columns>
+        </table:Table>
+      </Panel>
+
+    </VBox>
+  </Page>
+</mvc:View>
